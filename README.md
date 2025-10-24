@@ -60,3 +60,31 @@ Authors, Legal, software bibliography (softwares used), how to cite etc.
 
 This site is under construction - please submit suggestions to the authors or open up issues in the git. Feedback is very welcome. 
 
+## Legal
+           
+> Copyright (c) His Majesty the King in Right of Canada, as represented by the 
+> Minister of Health, 2025.
+
+Unless otherwise noted, the source code of this project is covered under Crown Copyright, Government of Canada, and is distributed under the [GPL-2 license](LICENSE).
+
+The Canada wordmark and related graphics associated with this distribution are protected under trademark law and copyright law. No permission is granted to use them outside the parameters of the Government of Canada's corporate identity program. For more information, see [Federal identity requirements](https://www.canada.ca/en/treasury-board-secretariat/topics/government-communications/federal-identity-requirements.html).
+
+## Contributors
+
+Martin Grunnill [martin.grunnill@phac-aspc.gc.ca](mailto:martin.grunnill@phac-aspc.gc.ca)  
+Carmen Lia Murall [carmen.lia.murall@phac-aspc.gc.ca](mailto:carmen.lia.murall@phac-aspc.gc.ca)   
+Rachelle Di Tullio   
+Kodjovi Mlaga  
+
+### Acknowledgments
+
+A forerunner and inspiration of this work was [CoV flow](https://gitlab.in2p3.fr/ete/CoV-flow).
+
+BEAST_pype would not be possible without:
+* [BEAST 2](https://www.beast2.org/) also [Bouckaert R. *et al.* (2019)](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006650)
+* The initial work on [BEAST2xml](https://github.com/acorg/beast2-xml/tree/master) by Terry Jones.
+
+IQTree  
+TimeTree
+  
+
