@@ -76,7 +76,7 @@ Carmen Lia Murall [carmen.lia.murall@phac-aspc.gc.ca](mailto:carmen.lia.murall@p
 Rachelle Di Tullio   
 Kodjovi Mlaga  
 
-### Useful Software
+### Acknowledgments
 
 A forerunner and inspiration of this work was [CoV flow](https://gitlab.in2p3.fr/ete/CoV-flow).
 
@@ -84,7 +84,7 @@ BEAST_pype would not be possible without:
 * [BEAST 2](https://www.beast2.org/) also [Bouckaert R. *et al.* (2019)](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006650)
 * The initial work on [BEAST2xml](https://github.com/acorg/beast2-xml/tree/master) by Terry Jones.
 
-IQTree
+IQTree  
 TimeTree
   
 
