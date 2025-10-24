@@ -67,7 +67,7 @@ A template Parameter Yaml has been provided for use with the [BDSKY-Serial workf
     * The 'BDSky Options' Section.
     * 'MCMC Tree/Logfile names Chain-lengths & Save Steps'
 
-## Examples of running the Generic Workflow 
+## Examples of running the BDSKY-Serial Workflow 
 
 Here we demonstrate the workflow outputs via running the example parameterization in [parameters/sbatch_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/sbatch_run_examples) and [parameters/locally_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/locally_run_examples).Launching any of the workflows with any of the example parameterization demonstrated here will create a directory starting with either `SBATCH-Test-BDSKY-Serial_*` or `LOCAL-Test-BDSKY-Serial_*` containing a **time stamped** folder (format 'YYYY-MM-DD_hour-min-sec').  
 
@@ -121,46 +121,37 @@ the slurm job running the workflow can be checked open using:
 ```bash
    squeue --format="%.18i %.9P %.30j %.8u %.8T %.10M %.9l %.6D %R" --me
 ```
-FINISHED EDITING UP TO HERE.
 
-# Variations of the BDSKY-Serial Workflow
+## Variations of the BDSKY-Serial Workflow
 
 There several variations available for running the BDSKY-Serial Workflow.
 
-## Variation 1: Running the Workflow in Full
+### Variation 1: Running the Workflow in Full
 
 ![simple_workflow_full.png](image_files/simple_workflow_full.png)
 
-### Launching via Command Line
 The examples in the two sections below will run the variation of the workflow with
-the parameters set in `parameters/Test-BDSKY-Serial_full.yml`. These examples will
-also create the directory `Test-BDSKY-Serial_full`, into which all the outputs will be
-saved.
-
-> **REMINDER:** You can alter them for usage or alter a copy of `parameters/Test-BDSKY-Serial_full.yml`. See [**Required modifications to BDSKY Serial Workflow parameters**](##-Required-modifications-to-BDSKY-Serial-Workflow-parameters) section above.
+the parameters set in [parameters/sbatch_run_examples/BDSKY-Serial_full.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/sbatch_run_examples/BDSKY-Serial_full.yml) (for running via sbatch) and [parameters/locally_run_examples/BDSKY-Serial_full.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/locally_run_examples/BDSKY-Serial_full.yml) (for running locally). These examples will
+also create the directory `SBATCH-Test-BDSKY-Serial_full` if running via sbatch or `Local-Test-BDSKY-Serial_full` if running locally. All the outputs from running the workflow will be saved in either of these files.
 
 #### Running on a HPC via SBATCH
 To run the full version of [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) from command line via slurm's `sbatch` enter the following command:
 ```bash
 cd LOCATION_YOU_CLONED_THE_BEAST_PYPE_REPO_TO
-sbatch run-workflow.slurm workflows/BDSKY-Serial.ipynb parameters/Test-BDSKY-Serial_full.yml
+sbatch run-workflow.slurm workflows/BDSKY-Serial.ipynb parameters/sbatch_run_examples/Test-BDSKY-Serial_full.yml
 ```
-
-> **NOTE:** if the argument `max_threads` is not given in `parameters/Test-BDSKY-Serial_full.yml`
-the beast_pype will limit the maximum cores being used to being equal to the `--cpus-per-task` SBATCH argument in [run-workflow.slurm](https://github.com/m-d-grunnill/BEAST_pype/blob/main/run-workflow.slurm).
-The number of cores being used at one time depends on the phase of the workflow running.
 
 #### Running Locally via Papermill
 To run the full version of [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) from command line via papermill enter the following command:
 ```bash
 cd LOCATION_YOU_CLONED_THE_BEAST_PYPE_REPO_TO
 conda activate beast_pype
-papermill workflows/BDSKY-Serial.ipynb BDSKY-Serial.ipynb -f parameters/Test-BDSKY-Serial_full.yml
+papermill workflows/BDSKY-Serial.ipynb BDSKY-Serial.ipynb -f parameters/locally_run_examples/Test-BDSKY-Serial_full.yml
 ```
 
-> **NOTE:** if the argument `max_threads` is not given in `parameters/Test-BDSKY-Serial_full.yml`
-the beast_pype will limit the maximum cores being used to all the available cores -1.
-The number of cores being used at one time depends on the phase of the workflow running.
+> **NOTE:** if the argument `max_threads` is not given in your parameter yml file when running locally,
+> beast_pype will limit the maximum cores being used to all the available cores -1.
+> The number of cores being used at one time depends on the phase of the workflow running.
 
 ## Variation 2: Skip building an initial tree and use BEAST 2's initial tree instead
 
@@ -169,88 +160,81 @@ The number of cores being used at one time depends on the phase of the workflow 
 The full [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) creates an initial tree using IQTree and TreeTime (in phases 2i and 2ii, respectively) and uses the initial tree in generating a BEAST 2 xml from the template xml. This initial tree does speed up the convergence of MCMC chains when running BEAST 2. However, this is slightly against the spirit of MCMC analysis (see [BEAST 2 documentation](https://www.beast2.org/2014/07/28/all-about-starting-trees)).  
 
 ### Modification to Input 
-[BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) can skip building the initial tree if the line `use_initial_tree: False` is in the parameter yml (see `parameters/Test-BDSKY-Serial_no-initial-tree.yml` for an example). 
+[BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb)  can skip building the initial tree building phase if the line `use_initial_tree: False` is the parameter yml. See [parameters/sbatch_run_examples/BDSKY-Serial_no-initial-tree.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/sbatch_run_examples/BDSKY-Serial_no-initial-tree.yml) and [parameters/locally_run_examples/BDSKY-Serial_no-initial-tree.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/locally_run_examples/BDSKY-Serial_no-initial-tree.yml) for examples. 
+
+> **REMINDER:** You can alter a copy of `[parameters/Template_BDSKY-Serial.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/Template_BDSKY-Serial.yml) so the initial tree building phase can be skipped. See [Setting up a parameter yml file](#setting-up-a-parameter-yml-file-) section above.
 
 ### Launching via Command Line
 The examples in the two sections below will run the variation of the workflow with
-the parameters set in `parameters/Test-BDSKY-Serial_no-initial-tree.yml`. These examples will
-also create the directory `Test-BDSKY-Serial_no-initial-tree`, into which all the outputs will be
-saved.
-
-> **REMINDER:** You can alter them for usage or alter a copy of `parameters/Test-BDSKY-Serial_no-initial-tree.yml`. See [**Required modifications to BDSKY Serial Workflow parameters**](##-Required-modifications-to-BDSKY-Serial-Workflow-parameters) section above.
+the parameters set in [parameters/sbatch_run_examples/BDSKY-Serial_no-initial-tree.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/sbatch_run_examples/BDSKY-Serial_no-initial-tree.yml) (for running via sbatch) and [parameters/locally_run_examples/BDSKY-Serial_no-initial-tree.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/locally_run_examples/BDSKY-Serial_no-initial-tree.yml) (for running locally). These examples will
+also create the directory `SBATCH-Test-BDSKY-Serial_no-initial-tree` if running via sbatch or `Local-Test-BDSKY-Serial_no-initial-tree` if running locally. All the outputs from running the workflow will be saved in either of these files.
 
 #### Running on a HPC via SBATCH
 To run the full version of [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) from command line via slurm's `sbatch` enter the following command:
 ```bash
 cd LOCATION_YOU_CLONED_THE_BEAST_PYPE_REPO_TO
-sbatch run-workflow.slurm workflows/BDSKY-Serial.ipynb parameters/Test-BDSKY-Serial_no-initial-tree.yml
+sbatch run-workflow.slurm workflows/BDSKY-Serial.ipynb parameters/sbatch_run_examples/BDSKY-Serial_no-initial-tree.yml
 ```
-
-> **NOTE:** if the argument `max_threads` is not given in `parameters/Test-BDSKY-Serial_no-initial-tree.yml`
-the beast_pype will limit the maximum cores being used to being equal to the `--cpus-per-task` SBATCH argument in [run-workflow.slurm](https://github.com/m-d-grunnill/BEAST_pype/blob/main/run-workflow.slurm).
-The number of cores being used at one time depends on the phase of the workflow running.
 
 #### Running Locally via Papermill
 To run the full version of [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) from command line via papermill enter the following command:
 ```bash
 cd LOCATION_YOU_CLONED_THE_BEAST_PYPE_REPO_TO
 conda activate beast_pype
-papermill workflows/BDSKY-Serial.ipynb BDSKY-Serial.ipynb -f parameters/Test-BDSKY-Serial_no-initial-tree.yml
+papermill workflows/BDSKY-Serial.ipynb BDSKY-Serial.ipynb -f parameters/locally_run_examples/BDSKY-Serial_no-initial-tree.yml
 ```
 
-> **NOTE:** if the argument `max_threads` is not given in `parameters/Test-BDSKY-Serial_no-initial-tree.yml`
-the beast_pype will limit the maximum cores being used to all the available cores -1.
-The number of cores being used at one time depends on the phase of the workflow running.
+> **NOTE:** if the argument `max_threads` is not given in your parameter yml file when running locally,
+> beast_pype will limit the maximum cores being used to all the available cores -1.
+> The number of cores being used at one time depends on the phase of the workflow running.
 
 ### Differences in Outputs
-This variant of the [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) will then run the in the same manner as the full version but miss Phases 2i and 2ii as such the Phase-2i-IQTree.ipynb.  
-
-As such Phase-2i-IQTree.ipynb and Phase-2ii-TreeTime-and-Down-Sampling.ipynb will **NOT** appear in the **time stamped** folder (neither will any files associated with the running of IQtree or TreeTime,  see [Filling of Time Stamped Folder](#Filling-of-Time-Stamped-Folder)).  
+This variant of the [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) will then run the in the same manner as the full version but miss Phases 2i and 2ii as such the Phase-2i-IQTree.ipynb.  As such the following will be missing from the [Time Stamped Folder](#time-stamped-folder):
+* [Phase-2i-IQTree.ipynb](https://github.com/m-d-grunnill/BEAST_pype/blob/main/src/beast_pype/workflow_modules/Phase-2i-IQTree-Building.ipynb)
+* [Phase-2i-IQTree-Correction.ipynb](https://github.com/m-d-grunnill/BEAST_pype/blob/main/src/beast_pype/workflow_modules/Phase-2i-IQTree-Correction.ipynb) 
+* [Phase-2ii-TreeTime-and-Down-Sampling.ipynb](https://github.com/m-d-grunnill/BEAST_pype/blob/main/src/beast_pype/workflow_modules/Phase-2ii-TreeTime-and-Down-Sampling.ipynb) 
+* 'initial_trees' folder containing the outputs from phase 2.
 
 ## Variation 3: Using a ready to go xml
 
 ![simple_workflow_xml_ready.png](image_files/simple_workflow_xml_ready.png)
 
-You may have a BEAST BDSKY xml that you wish to run directly with the [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb).  
+You may have a BEAST xml that you wish to run directly with the [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb).  
 
 ### Modification to Input
-This can be done by adding the variable `ready_to_go_xml` with the path to that BEAST BDSKY xml in the parameter yml file.  
-The file `parameters/Test-BDSKY-Serial_xml-ready-to-go.yml` provides an example.  
+This can be done by adding the variable `ready_to_go_xml` with the path to that BEAST xml in the parameter yml file.  
+See [parameters/sbatch_run_examples/Test-BDSKY-Serial_xml-ready-to-go.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/sbatch_run_examples/BDSKY-Serial_xml-ready-to-go.yml) and [parameters/locally_run_examples/BDSKY-Serial_xml-ready-to-go.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/locally_run_examples/BDSKY-Serial_xml-ready-to-go.yml) for examples. 
+
+> **REMINDER:** You can alter a copy of `[parameters/Template_BDSKY-Serial.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/Template_BDSKY-Serial.yml) so a [ready-to-go-xml](Glossary-of-Terms.md#ready-to-go-xml) can be used. See [Setting up a parameter yml file](#setting-up-a-parameter-yml-file-) section above.
 
 ### Launching via Command Line
 The examples in the two sections below will run the variation of the workflow with
-the parameters set in `parameters/Test-BDSKY-Serial_xml-ready-to-go.yml`. These examples will
-also create the directory `Test-BDSKY-Serial_xml-ready-to-go`, into which all the outputs will be
-saved.
-
-> **REMINDER:** You can alter them for usage or alter a copy of `parameters/Test-BDSKY-Serial_xml-ready-to-go.yml`. See [**Required modifications to BDSKY Serial Workflow parameters**](##-Required-modifications-to-BDSKY-Serial-Workflow-parameters) section above.
+the parameters set in [parameters/sbatch_run_examples/BDSKY-Serial_xml-ready-to-go.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/sbatch_run_examples/BDSKY-Serial_xml-ready-to-go.yml) (for running via sbatch) and [parameters/locally_run_examples/BDSKY-Serial_xml-ready-to-go.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/locally_run_examples/BDSKY-Serial_xml-ready-to-go.yml) (for running locally). These examples will
+also create the directory `SBATCH-Test-BDSKY-Serial_xml-ready-to-go` if running via sbatch or `Local-Test-BDSKY-Serial_xml-ready-to-go` if running locally. All the outputs from running the workflow will be saved in either of these files.
 
 #### Running on a HPC via SBATCH
-To run the full version of [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) from command line via slurm's `sbatch` enter the following command:
+To run the xml-ready-to-go version of [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) from command line via slurm's `sbatch` enter the following command:
 ```bash
 cd LOCATION_YOU_CLONED_THE_BEAST_PYPE_REPO_TO
-sbatch run-workflow.slurm workflows/BDSKY-Serial.ipynb parameters/Test-BDSKY-Serial_xml-ready-to-go.yml
+sbatch run-workflow.slurm workflows/BDSKY-Serial.ipynb parameters/sbatch_run_examples/BDSKY-Serial_xml-ready-to-go.yml
 ```
 
-> **NOTE:** if the argument `max_threads` is not given in `parameters/Test-BDSKY-Serial_xml-ready-to-go.yml`
-the beast_pype will limit the maximum cores being used to being equal to the `--cpus-per-task` SBATCH argument in [run-workflow.slurm](https://github.com/m-d-grunnill/BEAST_pype/blob/main/run-workflow.slurm).
-The number of cores being used at one time depends on the phase of the workflow running.
-
 #### Running Locally via Papermill
-To run the full version of [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) from command line via papermill enter the following command:
+To run the xml-ready-to-go version of [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) from command line via papermill enter the following command:
 ```bash
 cd LOCATION_YOU_CLONED_THE_BEAST_PYPE_REPO_TO
 conda activate beast_pype
-papermill workflows/BDSKY-Serial.ipynb BDSKY-Serial.ipynb -f parameters/Test-BDSKY-Serial_xml-ready-to-go.yml
+papermill workflows/BDSKY-Serial.ipynb BDSKY-Serial.ipynb -f parameters/locally_run_examples/BDSKY-Serial_xml-ready-to-go.yml
 ```
 
-> **NOTE:** if the argument `max_threads` is not given in `parameters/Test-BDSKY-Serial_xml-ready-to-go.yml`
-the beast_pype will limit the maximum cores being used to all the available cores -1.
-The number of cores being used at one time depends on the phase of the workflow running.
+> **NOTE:** if the argument `max_threads` is not given in your parameter yml file when running locally,
+> beast_pype will limit the maximum cores being used to all the available cores -1.
+> The number of cores being used at one time depends on the phase of the workflow running.
 
 ### Differences in Outputs
-This variant of the [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) will then run the in will miss phases 2-3 and copy the xml you provided into the **time stamped** folder and use it for running
-the rest of the [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb).  
-
-Due to skipping phases 2-3 of the full workflow Phase-2i-IQTree.ipynb, Phase-2ii-TreeTime-and-Down-Sampling.ipynb and Phase-3-Gen-BDSKY-Serial-xml.ipynb
-will **NOT** appear in the **time stamped** folder (neither will any files associated with the running of IQtree or TreeTime,  see [Filling of Time Stamped Folder](#Filling-of-Time-Stamped-Folder)).  
+This variant of the [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) will then run the in will miss phases 2-3 and copy the xml you provided into the **time stamped** folder and use it for running the rest of the [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb). As such the following will be missing from the [Time Stamped Folder](#time-stamped-folder):
+* [Phase-2i-IQTree.ipynb](https://github.com/m-d-grunnill/BEAST_pype/blob/main/src/beast_pype/workflow_modules/Phase-2i-IQTree-Building.ipynb)
+* [Phase-2i-IQTree-Correction.ipynb](https://github.com/m-d-grunnill/BEAST_pype/blob/main/src/beast_pype/workflow_modules/Phase-2i-IQTree-Correction.ipynb) 
+* [Phase-2ii-TreeTime-and-Down-Sampling.ipynb](https://github.com/m-d-grunnill/BEAST_pype/blob/main/src/beast_pype/workflow_modules/Phase-2ii-TreeTime-and-Down-Sampling.ipynb) 
+* [Phase-3-Gen-BDSKY-xml.ipynb](https://github.com/m-d-grunnill/BEAST_pype/blob/main/src/beast_pype/workflow_modules/Phase-3-Gen-BDSKY-xml.ipynb)
+* 'initial_trees' folder containing the outputs from phase 2.  
