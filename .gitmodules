@@ -1,0 +1,3 @@
+[submodule "BEAST_pype-documentation.wiki"]
+	path = BEAST_pype-documentation.wiki
+	url = git@github.com:m-d-grunnill/BEAST_pype-documentation.wiki.git
