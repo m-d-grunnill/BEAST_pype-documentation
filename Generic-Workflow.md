@@ -1,7 +1,7 @@
 # Objectives  
 - This workflow is intended for use with *any beast 2 xml*.   
-- This workflow does *not* segregate or sort data into separate xml_sets (see [Glossary of Terms](Glossary-of-Terms.md#xml-set)). 
-- Therefore, it does *not* use phase 1 notebooks.
+- This workflow does **not** segregate or sort data into separate [xml_sets](Glossary-of-Terms.md#xml-set). 
+- Therefore, it does **not** use phase 1 notebooks.
 
 ## Phases Used in Workflow
 ![simple_workflow_phases.png](image_files/simple_workflow_phases.png)
@@ -20,7 +20,7 @@ There are three variations of the Generic workflow that can be run:
 
 For a more detailed overview of the [Generic workflow notebook](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/Generic.ipynb) workflow's parameters see:
 * The top of [Generic workflow notebook](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/Generic.ipynb)
-* The template parameterization yaml at [parameters/Template_BDSKY-Serial.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/Template_BDSKY-Serial.yml).
+* The template parameterization yaml at [parameters/Template_Generic.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/Template_Generic.yml).
 
 
 # Running the Generic Workflow
@@ -63,7 +63,7 @@ A template Parameter Yaml has been provided for use with the  [Generic workflow 
 
 ## Examples of running the Generic Workflow 
 
-Here we demonstrate the workflow outputs via running the example parameterization in [parameters/sbatch_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/sbatch_run_examples) and [parameters/locally_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/locally_run_examples). Launching any of the workflows with any of the example parameterization demonstrated here will create a directory starting with either `SBATCH-Test-Generic_*` or `LOCAL-Test-Generic_*` containing a **time stamped** folder (format 'YYYY-MM-DD_hour-min-sec').  
+Here we demonstrate the workflow outputs via running the example parameterization in [parameters/sbatch_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/sbatch_run_examples) and [parameters/locally_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/locally_run_examples). Launching any of the workflows with the example parameterization demonstrated here will create a directory starting with either `SBATCH-Test-Generic_*` or `LOCAL-Test-Generic_*` containing a **time stamped** folder (format 'YYYY-MM-DD_hour-min-sec').  
 
 If you [launched a workflow via slurm](Overview-of-running-workflows.md#running-on-hpc-via-sbatch), shortly after the Generic workflow is 
 launched a running copy of [Generic workflow notebook](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/Generic.ipynb)
@@ -107,6 +107,8 @@ Running will [Phase-5-Diagnosing-Outputs-and-Generate-Report.ipynb](https://gith
   * The BEAST_pype-Report.ipynb notebook this contains summary figures and statistics of the results from running BEAST_pype.
   * The BEAST_pype-Report.html. This a html version of BEAST_pype-Report.ipynb with the code cells removed.
   * If you are running BEAST_pype on via sbatch the file 'BEAST_slurm_stats.csv' should appear. This is dataframe of various metrics recorded by slurm as it carried out your BEAST runs. 
+
+
 
 
 ### Checking on Progress
@@ -158,6 +160,8 @@ papermill workflows/Generic.ipynb Generic.ipynb -f parameters/locally_run_exampl
 ![simple_workflow_no_init_tree.png](image_files/simple_workflow_no_init_tree.png)
 
 The full [Generic workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/Generic.ipynb) creates an initial tree using IQTree and TreeTime (in phases 2i and 2ii, respectively) and uses the initial tree in generating a BEAST 2 xml from the template xml. This initial tree does speed up the convergence of MCMC chains when running BEAST 2. However, this is slightly against the spirit of MCMC analysis (see [BEAST 2 documentation](https://www.beast2.org/2014/07/28/all-about-starting-trees)).  
+For this reason we have created a variation of this workflow that skips building an initial tree and use BEAST 2's initial tree instead.
+
 
 ### Modification to Input 
 [Generic workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/Generic.ipynb) can skip building the initial tree building phase if the line `use_initial_tree: False` is the parameter yml. See [parameters/sbatch_run_examples/Generic_no-initial-tree.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/sbatch_run_examples/Generic_no-initial-tree.yml) and [parameters/locally_run_examples/Generic_no-initial-tree.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/locally_run_examples/Generic_no-initial-tree.yml) for examples. 

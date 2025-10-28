@@ -1,7 +1,7 @@
 # Objectives 
 - This workflow is intended for use with *BDSKY-Serial beast 2 xml*.   
-- This workflow does *not* segregate or sort data into separate xml_sets (see [Glossary of Terms](Glossary-of-Terms.md#xml-set)). 
-- Therefore, it does *not* use phase 1 notebooks. 
+- This workflow does **not** segregate or sort data into separate [xml_sets](Glossary-of-Terms.md#xml-set). 
+- Therefore, it does **not** use phase 1 notebooks. 
 
 ## Phases Used in Workflow
 ![simple_workflow_phases.png](image_files/simple_workflow_phases.png)
@@ -69,7 +69,7 @@ A template Parameter Yaml has been provided for use with the [BDSKY-Serial workf
 
 ## Examples of running the BDSKY-Serial Workflow 
 
-Here we demonstrate the workflow outputs via running the example parameterization in [parameters/sbatch_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/sbatch_run_examples) and [parameters/locally_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/locally_run_examples).Launching any of the workflows with any of the example parameterization demonstrated here will create a directory starting with either `SBATCH-Test-BDSKY-Serial_*` or `LOCAL-Test-BDSKY-Serial_*` containing a **time stamped** folder (format 'YYYY-MM-DD_hour-min-sec').  
+Here we demonstrate the workflow outputs via running the example parameterization in [parameters/sbatch_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/sbatch_run_examples) and [parameters/locally_run_examples](https://github.com/m-d-grunnill/BEAST_pype/tree/main/parameters/locally_run_examples). Launching any of the workflows with the example parameterization demonstrated here will create a directory starting with either `SBATCH-Test-BDSKY-Serial_*` or `LOCAL-Test-BDSKY-Serial_*` containing a **time stamped** folder (format 'YYYY-MM-DD_hour-min-sec').  
 
 If you [launched a workflow via slurm](Overview-of-running-workflows.md#running-on-hpc-via-sbatch), shortly after the BDSKY-Serial workflow is 
 launched a running copy of [BDSKY-Serial workflow notebook](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb)
@@ -157,7 +157,8 @@ papermill workflows/BDSKY-Serial.ipynb BDSKY-Serial.ipynb -f parameters/locally_
 
 ![simple_workflow_no_init_tree.png](image_files/simple_workflow_no_init_tree.png)
 
-The full [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) creates an initial tree using IQTree and TreeTime (in phases 2i and 2ii, respectively) and uses the initial tree in generating a BEAST 2 xml from the template xml. This initial tree does speed up the convergence of MCMC chains when running BEAST 2. However, this is slightly against the spirit of MCMC analysis (see [BEAST 2 documentation](https://www.beast2.org/2014/07/28/all-about-starting-trees)).  
+The full [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb) creates an initial tree using IQTree and TreeTime (in phases 2i and 2ii, respectively) and uses the initial tree in generating a BEAST 2 xml from the template xml. This initial tree does speed up the convergence of MCMC chains when running BEAST 2. However, this is slightly against the spirit of MCMC analysis (see [BEAST 2 documentation](https://www.beast2.org/2014/07/28/all-about-starting-trees)).  For this reason we have created a variation of this workflow that skips building an initial tree and use BEAST 2's initial tree instead.
+
 
 ### Modification to Input 
 [BDSKY-Serial workflow](https://github.com/m-d-grunnill/BEAST_pype/blob/main/workflows/BDSKY-Serial.ipynb)  can skip building the initial tree building phase if the line `use_initial_tree: False` is the parameter yml. See [parameters/sbatch_run_examples/BDSKY-Serial_no-initial-tree.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/sbatch_run_examples/BDSKY-Serial_no-initial-tree.yml) and [parameters/locally_run_examples/BDSKY-Serial_no-initial-tree.yml](https://github.com/m-d-grunnill/BEAST_pype/blob/main/parameters/locally_run_examples/BDSKY-Serial_no-initial-tree.yml) for examples. 
